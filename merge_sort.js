@@ -9,6 +9,8 @@ var board_size = canvas.height;
 
 var l = []
 
+canvas.addEventListener("click", init);
+
 function init(){
 	for(var i = 0; i < len; i++){
 		l.push(Math.round(i * (board_size / len)));
@@ -27,8 +29,12 @@ function init(){
 		orig.push(l[i]);
 		level_for_this_point.push(-1);
 	}
+	
+	generator = mergesort(0, len - 1);
 }
+var generator;
 init();
+main();
 
 function* mergesort(start, end){
 	var size = end - start + 1;
@@ -85,15 +91,12 @@ function* mergesort(start, end){
 	yield 0;
 }
 
-var generator = mergesort(0, len - 1);
-main();
 function main(){
 	var x = generator.next().value;
 
 	if(x === 0){
 		return 0;
 	}
-	console.log(x);
 
 	render(x);
 
