@@ -100,5 +100,5 @@ function main(){
 
 	render(x);
 
-	setTimeout(main, 15);
+	setTimeout(main, 0);
 }
