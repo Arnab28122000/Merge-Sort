@@ -7,20 +7,28 @@ canvas.width = window.innerWidth;
 var len = canvas.width;
 var board_size = canvas.height;
 
-var l = []
+var l = [];
 
-canvas.addEventListener("click", init);
+var generator;
+
+var loop = false;
+init();
+
+function shuffle(){
+	for(var i = l.length - 1; i >= 0; i--){
+		var j = Math.floor(Math.random() * (i + 1));
+
+		var tmp = l[i];
+		l[i] = l[j];
+		l[j] = tmp;
+	}
+}
 
 function init(){
 	for(var i = 0; i < len; i++){
 		l.push(Math.round(i * (board_size / len)));
 	}
-	for(var i = l.length - 1; i >= 0; i--){
-		var j = Math.floor(Math.random() * (i + 1));
-		var tmp = l[i];
-		l[i] = l[j];
-		l[j] = tmp;
-	}
+	shuffle();
 
 	last_level = -1;
 	curr_level = 0;
@@ -31,29 +39,27 @@ function init(){
 	}
 	
 	generator = mergesort(0, len - 1);
+	main();
 }
-var generator;
-init();
-main();
 
 function* mergesort(start, end){
 	var size = end - start + 1;
 
 	if(size <= 1){
-		yield 0;
+		yield [];
 	}
 
 	var half = start + Math.floor(size / 2);
 
 	var first = mergesort(start, half - 1);
 	var ret = first.next().value;
-	while(ret != 0){
+	while(ret.length >= 1){
 		yield ret;
 		ret = first.next().value;
 	}
 	first = mergesort(half, end);
 	ret = first.next().value;
-	while(ret != 0){
+	while(ret.length >= 1){
 		yield ret;
 		ret = first.next().value;
 	}
@@ -88,17 +94,24 @@ function* mergesort(start, end){
 		right++;
 		curr++;
 	}
-	yield 0;
+
+	yield [];
 }
 
 function main(){
 	var x = generator.next().value;
 
-	if(x === 0){
+	if(x.length <= 0){
+		if(loop){
+			init();	
+		} else {
+			curr_level++;
+			render(x);
+		}
 		return 0;
 	}
 
 	render(x);
 
-	setTimeout(main, 0);
+	main_timer = setTimeout(main, 0);
 }
