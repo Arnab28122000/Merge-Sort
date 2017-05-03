@@ -10,6 +10,7 @@ var board_size = canvas.height;
 var l = [];
 
 var generator;
+var main_timer;
 
 var loop = false;
 init();
