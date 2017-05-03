@@ -25,6 +25,7 @@ function shuffle(){
 }
 
 function init(){
+	l = [];
 	for(var i = 0; i < len; i++){
 		l.push(Math.round(i * (board_size / len)));
 	}
