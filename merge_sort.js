@@ -116,5 +116,5 @@ function main(){
 
 	render(x);
 
-	main_timer = setTimeout(main, 0);
+	main_timer = setTimeout(main, 20);
 }
