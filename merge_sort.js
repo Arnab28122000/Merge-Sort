@@ -26,7 +26,10 @@ function shuffle(){
 }
 
 function init(){
-	clearTimeout(main_timer);
+	for(var i = 0; i < 1000; i++){
+		clearTimeout(main_timer);
+	}
+	
 	l = [];
 	for(var i = 0; i < len; i++){
 		l.push(Math.round(i * (board_size / len)));
@@ -116,5 +119,5 @@ function main(){
 
 	render(x);
 
-	main_timer = setTimeout(main, 20);
+	main_timer = setTimeout(main, 0);
 }
